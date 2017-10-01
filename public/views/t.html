@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+	<title></title>
+  	<!--<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">-->
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css"/>
+	<link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css"/>
+  	<!--<link rel="stylesheet" href="/stylesheets/style.css">-->  	
+  	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+
+	<script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>  	
+	<script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>  	  	
+<style>
+#parent { width: 100%; height: 100%; position:relative;}	
+</style>
+</head>
+<body>
+<div id="parent" class="resizable">
+  <table id="xxxx"></table>
+  <div id="gridPager"></div>
+</div>
+
+
+<script type="text/javascript">
+$("#xxxx").jqGrid({
+                url: 'http://trirand.com/blog/phpjqgrid/examples/jsonp/getjsonp.php?callback=?&qwery=orders',
+                mtype: "GET",
+                datatype: "jsonp",
+  shrinkToFit: false,
+  width: null,
+  rownumbers: true,
+  pager: 'gridPager',
+                colModel: [
+                    { label: 'OrderID', name: 'OrderID', key: true, width: 75 },
+                    { label: 'Customer ID', name: 'CustomerID', width: 150 },
+                    { label: 'Order Date', name: 'OrderDate', width: 150 },
+                    { label: 'Freight', name: 'Freight', width: 150 },
+                    { label:'Ship Name', name: 'ShipName', width: 150 }
+                ],
+  caption: "jqGrid Size Setting Example",
+  beforeRequest: function() {
+    setTimeout(function() {
+      var gridName = 'grid';
+      $('#gbox_' + gridName).css({
+        position: 'absolute',
+        top: 0,
+        bottom: $('#gbox_' + gridName + ' .ui-pager-control').outerHeight() + 'px',
+        width: '100%'
+      });
+      $('#gbox_' + gridName + ' .ui-jqgrid-view').css({
+        'height': '100%'
+      });
+
+      $('#gbox_' + gridName + ' .ui-jqgrid-bdiv').css({
+        position: 'absolute',
+        top: $('#gbox_' + gridName + ' .ui-jqgrid-titlebar').outerHeight() + $('#gbox_' + gridName + ' .ui-jqgrid-hbox').outerHeight() + 'px',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '',
+        width: ''
+      });
+
+    }, 100);
+  },
+  gridComplete: function() {
+    // Test - resize cols based on content
+
+    $('#parent').append('<span id="widthTest" />');
+
+    gridName = this.id;
+
+    $('#gbox_' + gridName + ' .ui-jqgrid-htable,#' + gridName).css('width', 'inherit');
+    $('#' + gridName).parent().css('width', 'inherit');
+
+    var columnNames = $("#" + gridName).jqGrid('getGridParam', 'colModel');
+    var thisWidth;
+
+    // Loop through Cols
+    for (var itm = 0, itmCount = columnNames.length; itm < itmCount; itm++) {
+
+      var curObj = $('[aria-describedby=' + gridName + '_' + columnNames[itm].name + ']');
+
+      var thisCell = $('#' + gridName + '_' + columnNames[itm].name + ' div');
+      $('#widthTest').html(thisCell.text()).css({
+        'font-family': thisCell.css('font-family'),
+        'font-size': thisCell.css('font-size'),
+        'font-weight': thisCell.css('font-weight')
+      });
+      var maxWidth = Width = $('#widthTest').width() + 24;
+      //var maxWidth = 0;                      
+
+      // Loop through Rows
+      for (var itm2 = 0, itm2Count = curObj.length; itm2 < itm2Count; itm2++) {
+        var thisCell = $(curObj[itm2]);
+
+        $('#widthTest').html(thisCell.html()).css({
+          'font-family': thisCell.css('font-family'),
+          'font-size': thisCell.css('font-size'),
+          'font-weight': thisCell.css('font-weight')
+        });
+
+        thisWidth = $('#widthTest').width();
+        if (thisWidth > maxWidth) maxWidth = thisWidth;
+      }
+
+      $('#' + gridName + ' .jqgfirstrow td:eq(' + itm + '), #' + gridName + '_' + columnNames[itm].name).width(maxWidth).css('min-width', maxWidth);
+
+    }
+
+    $('#widthTest').remove();
+  }
+}).navGrid("#gridPager", {
+  edit: false,
+  add: true,
+  del: false
+});
+
+ </script> 
+</body>
+</html>

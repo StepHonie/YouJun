@@ -1,0 +1,50 @@
+{
+	"checkDBStatus":{
+		"sql":"select keyvalue from config where keyname='DBStatus'"
+	},
+    "getAreaAll":{
+        "sql":"SELECT '' AS Value,'All' AS Label UNION ALL SELECT  b.Value,b.Label FROM (SELECT TOP 100 f.DisplayOrder,b.Area AS Value,b.Area AS Label FROM FamilyRoute a WITH (NOLOCK) INNER JOIN Route b WITH (NOLOCK) ON a.FactoryMARoute_ID = b.FactoryMARoute_ID INNER JOIN Area f WITH (NOLOCK) ON f.Area = b.Area WHERE a.Customer_ID =@Customer_ID AND a.Family_ID=@Family_ID GROUP BY f.DisplayOrder,b.Area ORDER BY f.DisplayOrder) AS b"
+    },
+    "getArea":{
+        "sql":"SELECT  b.Value,b.Label FROM (SELECT TOP 100 f.DisplayOrder,b.Area AS Value,b.Area AS Label FROM FamilyRoute a WITH (NOLOCK) INNER JOIN Route b WITH (NOLOCK) ON a.FactoryMARoute_ID = b.FactoryMARoute_ID INNER JOIN Area f WITH (NOLOCK) ON f.Area = b.Area WHERE a.Customer_ID =@Customer_ID AND a.Family_ID=@Family_ID GROUP BY f.DisplayOrder,b.Area ORDER BY f.DisplayOrder) AS b"
+    },
+     "getCustomerList":{
+        "sql":"select Customer_ID As Value,Customer As Label from Customer WITH(NOLOCK) Order By Customer"
+    },
+     "getFamilyList":{
+        "sql":"select Family_ID AS Value, Family AS Label from CustomerFamily WITH (NOLOCK) where Customer_ID =@Customer_ID"
+    },
+     "getFamilyALL":{
+        "sql":"SELECT '' AS Value, 'All' AS Label UNION ALL select Family_ID AS Value, Family AS Label from CustomerFamily WITH (NOLOCK) where Customer_ID =@Customer_ID"
+    },
+     "getCustomerFamily_ID":{
+        "sql":"select c.Customer_ID,cf.Family_ID FROM Customer c WITH (NOLOCK) INNER JOIN CustomerFamily cf WITH (NOLOCK) ON c.Customer_ID=cf.Customer_ID AND c.Customer= '@Customer' AND cf.Family='@Family'"
+    },
+     "getBatchID":{
+     	"sql":"SELECT '' AS Value, 'All' AS Label UNION ALL SELECT DISTINCT BatchID AS Value, BatchID AS Label FROM BatchID WHERE Customer_ID =@Customer_ID AND Family_ID =@Family_ID AND (AssemblyNumber= '@AssemblyNumber' OR '@AssemblyNumber' ='') ORDER BY Value"
+    },
+     "getFactoryMARoute_ID":{
+        "sql":"SELECT FactoryMARoute_ID FROM Route WHERE MAText ='@RouteText' OR RouteText ='@RouteText' AND Area ='@Area'"
+    },
+     "getPrice":{
+     	"sql":"SELECT DISTINCT c.Family,a.AssemblyNumber,a.Price FROM AssemblyPrice a WITH(NOLOCK) INNER JOIN Assembly b WITH(NOLOCK) ON a.AssemblyNumber =b.AssemblyNumber INNER JOIN CustomerFamily c WITH (NOLOCK) ON c.Family_ID =b.Family_ID AND c.Customer_ID =@Customer_ID AND (c.Family_ID=@Family_ID OR @Family_ID ='') ORDER BY c.Family,a.AssemblyNumber"
+    },
+     "updatePrice":{
+     	"sql":"UPDATE AssemblyPrice SET Price = @Price, UserID = '@UserID', LastUpdated = GETDATE() WHERE AssemblyNumber ='@AssemblyNumber'"
+    },
+     "getMAConf":{
+    	"sql":"SELECT FactoryMARoute_ID,FactoryText AS Factory,MAText AS [MA],RouteText AS Route,Area AS Area FROM Route WITH(NOLOCK) ORDER BY Factory,[MA],Route"
+    },
+     "getAreaList":{
+    	"sql":"SELECT Area + ':' + Area AS Area FROM Area ORDER BY DisplayOrder"
+    },
+     "updateArea":{
+     	"sql":"UPDATE Route SET Area ='@Area' WHERE FactoryMARoute_ID =@FactoryMARoute_ID;EXEC CreateStation;"
+    },
+     "getStationConf":{
+     	"sql":"SELECT CONVERT(NVARCHAR(20),Customer_ID) + '%' + CONVERT(NVARCHAR(20),Family_ID) + '%' + Station + '%' + Area AS Station_ID, Station, StationAlias, IsKeyStation, DisplayOrder FROM Station WITH (NOLOCK) WHERE Customer_ID =@Customer_ID AND Family_ID =@Family_ID AND Area ='@Area' ORDER BY DisplayOrder, StationAlias, Station "
+    },
+     "updateStation":{
+     	"sql":"UPDATE Station SET StationAlias ='@Alias', IsKeyStation = @IsKeyStation, DisplayOrder = @DisplayOrder, UserID = '@UserID', LastUpdated = GETDATE() WHERE Customer_ID =@Customer_ID AND Family_ID = @Family_ID AND Station ='@Station' AND Area ='@Area';"
+     }
+}

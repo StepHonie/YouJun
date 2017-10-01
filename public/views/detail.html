@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+	<title>WIP Detail</title>
+  	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/jqgrid/css/jquery-ui.css"/>
+		<link rel="stylesheet" href="/jqgrid/css/jqgrid.css"/>
+  	<link rel="stylesheet" href="/stylesheets/style.css">
+
+	<script src="/javascripts/jquery-2.2.3.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/jqgrid/grid.locale-en.js"></script>
+	<script src="/jqgrid/jquery.jqgrid.min.js"></script>
+	<script src="/jqgrid/jquery-ui.min.js"></script>
+	<script src="/jqgrid/jszip.min.js"></script>
+	<script src="/javascripts/jquery.cookie.js" ></script>
+	<script src="/layer/layer.js"></script>
+
+	<script src="/javascripts/func.js" ></script>
+	<script src="/javascripts/detail.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+	<div id="top"></div>
+	<div class="container" style="margin-top: 80px;">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">WIP Detail</h3>
+		  </div>
+		<table>
+			<tr>
+				<td>Customer</td>
+				<td>
+					<select name="customer_id" id="customer_id"></select>
+				</td>
+				<td>Family</td>
+				<td><select name="family_id" id="family_id">
+					<option value="1">Family</option>
+					</select>
+				</td>
+				<td>Area</td>
+				<td><select name="area" id="area">
+					<option value="">All</option>
+					</select>
+				</td>
+				<td>Route</td>
+				<td><select name="factorymaroute_id" id="factorymaroute_id">
+					<option value="">All</option>
+					</select>
+				</td>
+				<td><button id='btnview' style="margin-left: 20px;" class="btn btn-sm btn-primary">View</button> </td>
+			</tr>
+			<tr>
+				<td>Assemly</td>
+				<td><select name="assemblynumber" id="assemblynumber">
+					<option value="">All</option>
+					</select>
+			    </td>
+				<td>Step Type</td>
+				<td><select name="steptype" id="steptype">
+					<option value="">All</option>
+					</select>
+				</td>
+				<td>Station</td>
+				<td><select name="station" id="station">
+					<option value="">All</option>
+					</select>
+			    </td>
+				<td>Batch ID</td>
+				<td><select name="batchid" id="batchid">
+					<option value="">All</option>
+					</select>
+			    </td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Aged Days</td>
+				<td>
+					<input type="text" class="text" name="daysfrom" id="daysfrom" value="0" />&nbsp;To
+					<input type="text" class="text" name="daysto" id="daysto" value="3" />
+			    </td>
+				<td>Test Status
+				</td>
+				<td><select name="status" id="status">
+					<option value="">All</option>
+					<option value="Present">Present</option>
+					<option value="Pass">Pass</option>
+					<option value="Fail">Fail</option>
+					<option value="Abort">Abort</option>
+					</select>
+			    </td>
+				<td>Is RMA</td>
+				<td><select name="isrma" id="isrma">
+					<option value="">All</option>
+					<option value="0">Not RMA</option>
+					<option value="1">Only RMA</option>
+					</select>
+			    </td>
+			    <td><label for="iskeystation">Is Key Station</label></td>
+				<td><input type="checkbox" name="iskeystation" id="iskeystation" value="1" /></td>
+				<td>
+				</td>
+			</tr>
+		</table>
+      </div>
+      <div class="row">
+		<div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all" style="position:absolute;top:-9999px"><div class="ui-jqgrid-view">
+		<div class="ui-jqgrid-bdiv"><div style="position: relative;">
+		<table cellspacing="0" cellpadding="0" border="0">
+		<tr class="ui-widget-content jqgrow ui-row-ltr" style="table-layout:table">
+		<td id="tdCompute" style="background:#eee;width:auto"></td>
+	  </tr></table></div></div></div></div>
+		<!-----用来计算单元格内容实际长度的--------->
+		<table id="SNTable" class="SNTable"></table>
+	    <div id="pager"></div>
+	  </div>
+	</div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

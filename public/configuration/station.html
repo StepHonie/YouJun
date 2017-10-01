@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Station Configuration</title>
+  	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="/bootstrap/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/jqgrid/css/jquery-ui.css"/>
+	<link rel="stylesheet" href="/jqgrid/css/jqgrid.css"/>    
+  	<link rel="stylesheet" href="/stylesheets/style.css">  	 	
+
+	<script src="/javascripts/jquery-2.2.3.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/jqgrid/grid.locale-en.js"></script>
+	<!--<script src="/jqgrid/jquery.jqgrid.min.js"></script>-->  	
+		<script src="/jqgrid/jquery.jqGrid.js"></script> 
+	<script src="/jqgrid/jquery-ui.min.js"></script>  		
+	<script src="/jqgrid/jszip.min.js"></script>  	
+	<script src="/javascripts/jquery.cookie.js" ></script>
+	<script src="/layer/layer.js"></script>  
+	
+	<script src="/javascripts/func.js" ></script>	
+	<script src="/javascripts/station.js"></script>
+	  		
+	</head>
+	<body>
+	<div class="container">
+		<div id='top'></div>
+	<div class="container" style="margin-top: 80px;">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Station Configuration</h3>
+		  </div>
+				<table>
+					<tr>
+						<td>Customer</td>
+						<td><select name="customer_id" id="customer_id">
+							</select>
+						</td>
+						<td>Family</td>
+						<td><select name="family_id" id="family_id">
+							<option value="1">Family</option>
+							</select>
+						</td>
+						<td>Area</td>
+						<td><select name="area" id="area">
+							</select>
+						</td>							
+						<td>
+							<button class="btn btn-sm btn-primary" id='query'> Query</button>
+						</td>
+						<td style="width: 500px;"></td>
+					</tr>
+				</table>
+
+			</div>
+				<table id='dataTable'>
+				</table>
+				<div id='pager'></div>			
+		</div>
+	</div>
+		
+	</body>
+</html>
